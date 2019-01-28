@@ -7,21 +7,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 
 public class MainActivity extends AppCompatActivity {
 
     Button counter1Up, counter1Down, counter2Up, counter2Down;
     TextView lifeCount1, lifeCount2;
 
+    int lifeTotal1, lifeTotal2;
+    
+
     AdView adView = new AdView(this);
 
-    int lifeTotal1, lifeTotal2;
-
-    private AdView mAdView;
+    private PublisherAdView mPublisherAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +30,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUI();
+        
+        PublisherAdView adView = new PublisherAdView(this);
+        adView.setAdSizes(AdSize.BANNER);
 
-        MobileAds.initialize(this, "ca-app-pub-8065887610573597~9004319337");
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        adView.setAdUnitId("/6499/example/banner");
+
+        mPublisherAdView = findViewById(R.id.publisherAdView);
+        PublisherAdRequest adRequest =  new PublisherAdRequest.Builder().build();
+        mPublisherAdView.loadAd(adRequest);
+
 
 
         counter1Up.setOnClickListener(new View.OnClickListener() {
